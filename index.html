@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Noureen Babyy 💌</title>
+  <style>
+    :root{
+      --bg1:#fff7fb;
+      --bg2:#fff1f6;
+      --card:#ffffffcc;
+      --text:#1f1f1f;
+      --soft:#666;
+      --btn:#111;
+      --btnText:#fff;
+      --accent:#ff4d8d;
+      --border:#e8e8e8;
+      --shadow: 0 12px 30px rgba(0,0,0,.08);
+      --radius: 18px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 700px at 30% 10%, var(--bg1), transparent 60%),
+                  radial-gradient(900px 600px at 80% 30%, var(--bg2), transparent 55%),
+                  #fff;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:16px;
+    }
+
+    .app{
+      width:min(720px, 100%);
+      background: var(--card);
+      border:1px solid var(--border);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      overflow:hidden;
+    }
+
+    .topbar{
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom:1px solid var(--border);
+      background:#fff;
+    }
+    .brand{
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    .tiny{
+      font-size:12px;
+      color:var(--soft);
+    }
+
+    .slide{
+      display:none;
+      padding:22px 18px 26px;
+      background: transparent;
+    }
+    .slide.active{ display:block; }
+
+    h1,h2{
+      margin:0 0 10px;
+      line-height:1.15;
+    }
+    h1{ font-size: clamp(24px, 4.5vw, 40px); }
+    h2{ font-size: clamp(20px, 4vw, 30px); }
+
+    p{
+      margin: 10px 0;
+      color: var(--soft);
+      font-size: 15px;
+      line-height:1.6;
+    }
+
+    .center{ text-align:center; }
+    .spacer{ height:10px; }
+
+    .btnRow{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-top:14px;
+    }
+    button, .btn{
+      border:0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 15px;
+      cursor:pointer;
+      background: var(--btn);
+      color: var(--btnText);
+      transition: transform .08s ease;
+      user-select:none;
+    }
+    button:active{ transform: scale(.98); }
+
+    .btnSoft{
+      background:#fff;
+      color:#111;
+      border:1px solid var(--border);
+    }
+
+    .btnAccent{
+      background: var(--accent);
+      color:#fff;
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding:16px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.05);
+      margin-top:14px;
+    }
+
+    /* Moving No button area */
+    .noZone{
+      position: relative;
+      height: 110px;
+      margin-top: 8px;
+    }
+    #noBtn{
+      position:absolute;
+      left: 55%;
+      top: 35px;
+    }
+
+    .hint{
+      color:#444;
+      font-size:13px;
+    }
+
+    /* Gifts grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:12px;
+      margin-top: 14px;
+    }
+    @media (max-width:520px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .giftBtn{
+      width:100%;
+      padding: 14px 12px;
+      border-radius: 16px;
+      background:#fff;
+      border:1px solid var(--border);
+      color:#111;
+      text-align:left;
+      box-shadow: 0 10px 18px rgba(0,0,0,.04);
+    }
+    .giftBtn strong{ display:block; font-size:16px; }
+    .giftBtn span{ color:var(--soft); font-size:13px; }
+
+    .badge{
+      display:inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size:12px;
+      margin-left:8px;
+      background:#f2f2f2;
+      color:#333;
+    }
+    .badge.done{ background:#eafff1; color:#0b7a2d; border:1px solid #bfead0; }
+
+    /* Quiz */
+    .qTitle{ font-weight:700; color:#111; margin-bottom:10px; }
+    .options{ display:grid; gap:10px; margin-top:10px; }
+    .opt{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 12px;
+      cursor:pointer;
+      text-align:left;
+      color:#111;
+    }
+    .opt:hover{ border-color:#d8d8d8; }
+    .feedback{
+      margin-top:10px;
+      font-size:14px;
+      min-height:22px;
+    }
+    .good{ color:#0b7a2d; }
+    .bad{ color:#b00020; }
+
+    /* Typewriter */
+    .typeBox{
+      white-space: pre-wrap;
+      font-size:15px;
+      line-height:1.7;
+      color:#333;
+      min-height: 220px;
+    }
+    .cursor{
+      display:inline-block;
+      width: 8px;
+      height: 18px;
+      background:#333;
+      margin-left:2px;
+      animation: blink 1s infinite;
+      vertical-align: -3px;
+    }
+    @keyframes blink{
+      0%,49%{ opacity:1; }
+      50%,100%{ opacity:0; }
+    }
+
+    /* Polaroids */
+    .polaroidWrap{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:12px;
+      margin-top: 14px;
+    }
+    @media (max-width:520px){
+      .polaroidWrap{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .polaroid{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius: 14px;
+      padding:10px 10px 14px;
+      box-shadow: 0 12px 24px rgba(0,0,0,.08);
+      transform: rotate(var(--rot));
+    }
+    .polaroid img{
+      width:100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 10px;
+      display:block;
+    }
+    .cap{
+      margin-top:10px;
+      font-size:12px;
+      color:#444;
+      text-align:center;
+    }
+
+    .usPic{
+      width:100%;
+      border-radius: 16px;
+      border:1px solid var(--border);
+      display:block;
+      margin-top: 12px;
+    }
+
+    .footerNav{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      margin-top:14px;
+      flex-wrap:wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">Noureen Babyy 💗</div>
+      <div class="tiny" id="progressText">Slide 1/6</div>
+    </div>
+
+    <!-- SLIDE 1 -->
+    <section class="slide active" id="s1">
+      <div class="center">
+        <h1>Babyy? will u be mine?? 🥺</h1>
+        <p class="hint">Don’t overthink… just feel it 😝</p>
+
+        <div class="btnRow">
+          <button class="btnAccent" onclick="go('s2')">Yes 💖</button>
+        </div>
+
+        <div class="noZone">
+          <button id="noBtn" class="btnSoft" onclick="nope()">No 🙃</button>
+        </div>
+
+        <p id="noMsg" class="hint"></p>
+      </div>
+    </section>
+
+    <!-- SLIDE 2 -->
+    <section class="slide" id="s2">
+      <div class="center">
+        <h2>Happy Valentine Day Baby! 💘</h2>
+        <p style="max-width:520px;margin:10px auto 0;">
+          Every second with you is a celebration. You are the spark that makes my world so much brighter!
+        </p>
+
+        <div class="btnRow">
+          <button class="btnAccent" onclick="go('s3')">See my gifts 🎁</button>
+        </div>
+
+        <div class="footerNav">
+          <button class="btnSoft" onclick="go('s1')">Back</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: Gifts Menu -->
+    <section class="slide" id="s3">
+      <div class="center">
+        <h2>Something for you ✨</h2>
+        <p>Open all three gifts… then I’ll unlock the last one 😌</p>
+
+        <div class="grid">
+          <button class="giftBtn" onclick="openGift(1)">
+            <strong>Gift 1 <span id="b1" class="badge">locked</span></strong>
+            <span>A tiny quiz 😏</span>
+          </button>
+
+          <button class="giftBtn" onclick="openGift(2)">
+            <strong>Gift 2 <span id="b2" class="badge">locked</span></strong>
+            <span>A letter for you 💌</span>
+          </button>
+
+          <button class="giftBtn" onclick="openGift(3)">
+            <strong>Gift 3 <span id="b3" class="badge">locked</span></strong>
+            <span>Polaroid moments 📸</span>
+          </button>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div id="finalUnlock" class="card" style="display:none;">
+          <div class="center">
+            <p style="margin:0;color:#333;font-weight:700;">HERE WE GOO FINALLY.. 😝</p>
+            <div class="btnRow">
+              <button class="btnAccent" onclick="go('s6')">Open the last slide 💖</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="footerNav">
+          <button class="btnSoft" onclick="go('s2')">Back</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: Gift 1 Quiz -->
+    <section class="slide" id="s4">
+      <h2 class="center">Gift 1: Quick quiz 😏</h2>
+      <div class="card" id="quizCard">
+        <div class="qTitle" id="qText"></div>
+        <div class="options" id="opts"></div>
+        <div class="feedback" id="fb"></div>
+        <div class="btnRow">
+          <button class="btnSoft" onclick="go('s3')">Back to gifts</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Gift 2 Letter -->
+    <section class="slide" id="s5">
+      <h2 class="center">Gift 2: A letter 💌</h2>
+      <div class="card">
+        <div class="typeBox" id="typeBox"></div><span id="cursor" class="cursor" style="display:none;"></span>
+        <div class="btnRow">
+          <button class="btnSoft" onclick="go('s3')">Back to gifts</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5B: Gift 3 Polaroids -->
+    <section class="slide" id="s5b">
+      <h2 class="center">Gift 3: Polaroid moments 📸</h2>
+      <div class="card">
+        <p class="center">You + my heart = perfect combo 😌</p>
+        <div class="polaroidWrap">
+          <div class="polaroid" style="--rot:-2deg;"><img src="assets/p1.jpg" alt="pic1"><div class="cap">babyy energy</div></div>
+          <div class="polaroid" style="--rot:2deg;"><img src="assets/p2.jpg" alt="pic2"><div class="cap">pretty pretty</div></div>
+          <div class="polaroid" style="--rot:-1deg;"><img src="assets/p3.jpg" alt="pic3"><div class="cap">my fav</div></div>
+          <div class="polaroid" style="--rot:1.5deg;"><img src="assets/p4.jpg" alt="pic4"><div class="cap">cutesttt</div></div>
+          <div class="polaroid" style="--rot:-1.8deg;"><img src="assets/p5.jpg" alt="pic5"><div class="cap">angel vibes</div></div>
+          <div class="polaroid" style="--rot:1deg;"><img src="assets/p6.jpg" alt="pic6"><div class="cap">meri jaan</div></div>
+        </div>
+
+        <div class="btnRow">
+          <button class="btnSoft" onclick="go('s3')">Back to gifts</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Final -->
+    <section class="slide" id="s6">
+      <div class="center">
+        <h2>you are meri jaan 😝</h2>
+
+        <img class="usPic" src="assets/us.jpg" alt="us photo" />
+
+        <p style="max-width:560px;margin:12px auto 0;color:#333;">
+          i love you more than words can say. No matter where life takes us, my heart will always choose you.
+          Thank you for being my peace, my smile, my love. This Valentine's Day and every day after, I'm grateful
+          to call you mine.
+        </p>
+
+        <div class="btnRow">
+          <button class="btnAccent" onclick="go('s3')">Go back 💖</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Slide navigation
+    const slides = ["s1","s2","s3","s4","s5","s5b","s6"];
+    function go(id){
+      document.querySelectorAll(".slide").forEach(s=>s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+
+      // Update top progress
+      const index = slides.indexOf(id);
+      document.getElementById("progressText").textContent =
+        `Slide ${Math.max(1, index+1)}/${slides.length}`;
+
+      // When entering letter slide, start typewriter once
+      if(id === "s5") startLetter();
+
+      // When entering quiz slide, render current question
+      if(id === "s4") renderQ();
+
+      // mark gift as opened when you visit its slide
+      if(id === "s4") markOpened(1);
+      if(id === "s5") markOpened(2);
+      if(id === "s5b") markOpened(3);
+    }
+
+    // Moving NO button
+    let noCount = 0;
+    function nope(){
+      noCount++;
+      const btn = document.getElementById("noBtn");
+      const zone = document.querySelector(".noZone");
+      const maxX = zone.clientWidth - btn.offsetWidth;
+      const maxY = zone.clientHeight - btn.offsetHeight;
+
+      const x = Math.random() * Math.max(10, maxX);
+      const y = Math.random() * Math.max(10, maxY);
+
+      btn.style.left = x + "px";
+      btn.style.top  = y + "px";
+
+      const msg = document.getElementById("noMsg");
+      const lines = [
+        "think again plss 🥺",
+        "babyy no doesn’t exist 😝",
+        "nice try 😭 press YES",
+        "come onnn 😌💗",
+      ];
+      msg.textContent = lines[Math.min(lines.length-1, noCount-1)];
+    }
+
+    // Gifts unlock tracking
+    const opened = {1:false,2:false,3:false};
+
+    function markOpened(n){
+      opened[n] = true;
+      const badge = document.getElementById("b"+n);
+      badge.textContent = "opened";
+      badge.classList.add("done");
+
+      // if all opened show final
+      if(opened[1] && opened[2] && opened[3]){
+        document.getElementById("finalUnlock").style.display = "block";
+      }
+    }
+
+    function openGift(n){
+      if(n===1) go("s4");
+      if(n===2) go("s5");
+      if(n===3) go("s5b");
+    }
+
+    // QUIZ (Gift 1)
+    const quiz = [
+      {
+        q:"What’s something I really adore about you?",
+        a:[
+          "a) Your kindness",
+          "b) Your smile",
+          "c) The way you tuck your hair behind your ear",
+          "d) All of the above 😌"
+        ],
+        correct: 3,
+        closeMsg:"Incorrect… but close 😌"
+      },
+      {
+        q:"What makes me melt instantly?",
+        a:[
+          "a) Your smile",
+          "b) Your laugh",
+          "c) Your voice",
+          "d) Literally everything about you 🫠"
+        ],
+        correct: 3,
+        closeMsg:"Nope 😭 but close"
+      },
+      {
+        q:"What’s your favourite dialogue? 😏",
+        a:[
+          "a) Challl",
+          "b) Sorry bol",
+          "c) Kyom",
+          "d) Sorry"
+        ],
+        correct: 0,
+        closeMsg:"Not this one 😝 try again"
+      }
+    ];
+
+    let qi = 0;
+    let passed = [false,false,false];
+
+    function renderQ(){
+      const q = quiz[qi];
+      document.getElementById("qText").textContent = `Q${qi+1}. ${q.q}`;
+      const opts = document.getElementById("opts");
+      const fb = document.getElementById("fb");
+      fb.textContent = "";
+      fb.className = "feedback";
+
+      opts.innerHTML = "";
+      q.a.forEach((txt, idx)=>{
+        const b = document.createElement("button");
+        b.className = "opt";
+        b.textContent = txt;
+        b.onclick = ()=>answer(idx);
+        opts.appendChild(b);
+      });
+    }
+
+    function answer(idx){
+      const fb = document.getElementById("fb");
+      const q = quiz[qi];
+
+      if(idx === q.correct){
+        passed[qi] = true;
+        fb.textContent = "Correct 😌💗";
+        fb.className = "feedback good";
+
+        setTimeout(()=>{
+          if(qi < quiz.length-1){
+            qi++;
+            renderQ();
+          } else {
+            // All done
+            const all = passed.every(Boolean);
+            if(all){
+              document.getElementById("qText").textContent = "yayayay you passed the test you really are smart ❤️";
+              document.getElementById("opts").innerHTML = "";
+              fb.textContent = "";
+            }
+          }
+        }, 650);
+
+      } else {
+        fb.textContent = q.closeMsg;
+        fb.className = "feedback bad";
+      }
+    }
+
+    // TYPEWRITER Letter (Gift 2)
+    const letterText =
+`My Baby,
+Thank you for being my person. The One I want to hold hand through every season of life.
+You are my home. You are my evrything, and I love you so so much.
+Be the same as you are and i miss you har ek pal.
+No one can replace you from my hearty, ur alwys be my no 1
+
+Forever yours. ❤️`;
+
+    let typedOnce = false;
+    let typingTimer = null;
+
+    function startLetter(){
+      if(typedOnce) return;
+      typedOnce = true;
+
+      const box = document.getElementById("typeBox");
+      const cursor = document.getElementById("cursor");
+      cursor.style.display = "inline-block";
+      box.textContent = "";
+
+      let i = 0;
+      const speed = 22; // smaller = faster
+
+      typingTimer = setInterval(()=>{
+        box.textContent += letterText[i] || "";
+        i++;
+        if(i >= letterText.length){
+          clearInterval(typingTimer);
+          cursor.style.display = "none";
+        }
+      }, speed);
+    }
+  </script>
+</body>
+</html>
